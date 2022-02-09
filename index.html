@@ -227,7 +227,7 @@
       const searchEmployee = () => {
         const seacrhEmployeeByName =
           document.getElementById("searchFname").value;
-        const seacrhEmployeeByOccupation =
+        const searchEmployeeByOccupation =
           document.getElementById("searchOccupation").value;
 
         let listData = "";
@@ -236,7 +236,7 @@
             val.fullName
               .toLowerCase()
               .includes(seacrhEmployeeByName.toLowerCase()) &&
-            val.occupation.includes(seacrhEmployeeByOccupation)
+            val.occupation.includes(searchEmployeeByOccupation)
           ) {
             listData += `
             <tr>
