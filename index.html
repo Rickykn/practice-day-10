@@ -62,17 +62,7 @@
         </tr>
       </thead>
 
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>John@mail.com</td>
-          <td>29</td>
-          <td>Software Developer</td>
-          <td><button>Edit</button></td>
-          <td><button>Delete</button></td>
-        </tr>
-      </tbody>
+      <tbody id="tableData"></tbody>
     </table>
 
     <br />
@@ -122,6 +112,48 @@
       </tbody>
     </table>
 
-    <script></script>
+    <script>
+      class Person {
+        constructor({ fisrtName, lastName, occupation, gender, email, age }) {
+          this.fisrtName = fisrtName;
+          this.lastName = lastName;
+          this.occupation = occupation;
+          this.email = email;
+          this.age = age;
+        }
+      }
+      let data = [
+        // new Person("Mark", "Software Developer", "Pria"),
+        // new Person("Steve", "CEO", "Pria"),
+        // new Person("Biill", "UI/UX", "Pria"),
+        // new Person("Seto", "Data Scientist", "Pria"),
+        new Person({
+          fisrtName: "John",
+          lastName: "Doe",
+          email: "John@mail.com",
+          age: 29,
+          occupation: "Software Developer",
+        }),
+      ];
+
+      const renderData = () => {
+        listData = "";
+        data.forEach((val, idx) => {
+          listData += `
+          <tr>
+            <td>${idx + 1}</td>
+            <td>${val.fisrtName + val.lastName}</td>
+            <td>${val.email}</td>
+            <td>${val.age}</td>
+            <td>${val.occupation}</td>
+            <td><button>Edit</button></td>
+            <td><button>Delete</button></td>
+          </tr>
+          `;
+        });
+        document.getElementById("tableData").innerHTML = listData;
+      };
+      renderData();
+    </script>
   </body>
 </html>
