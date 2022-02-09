@@ -143,7 +143,7 @@
             <td>${val.age}</td>
             <td>${val.occupation}</td>
             <td><button>Edit</button></td>
-            <td><button>Delete</button></td>
+            <td><button onclick="deleteData(${idx})">Delete</button></td>
           </tr>
           `;
         });
@@ -185,6 +185,11 @@
         document.getElementById("age").value = "";
       };
       renderData();
+
+      const deleteData = (deleteIdx) => {
+        data.splice(deleteIdx, 1);
+        renderData();
+      };
     </script>
   </body>
 </html>
