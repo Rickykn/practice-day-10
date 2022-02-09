@@ -42,7 +42,7 @@
       </select>
       <br />
       <br />
-      <button>Create Data</button>
+      <button onclick="addData()">Create Data</button>
     </fieldset>
 
     <br />
@@ -123,10 +123,6 @@
         }
       }
       let data = [
-        // new Person("Mark", "Software Developer", "Pria"),
-        // new Person("Steve", "CEO", "Pria"),
-        // new Person("Biill", "UI/UX", "Pria"),
-        // new Person("Seto", "Data Scientist", "Pria"),
         new Person({
           fisrtName: "John",
           lastName: "Doe",
@@ -142,7 +138,7 @@
           listData += `
           <tr>
             <td>${idx + 1}</td>
-            <td>${val.fisrtName + val.lastName}</td>
+            <td>${val.fisrtName + " " + val.lastName}</td>
             <td>${val.email}</td>
             <td>${val.age}</td>
             <td>${val.occupation}</td>
@@ -152,6 +148,41 @@
           `;
         });
         document.getElementById("tableData").innerHTML = listData;
+      };
+
+      const addData = () => {
+        const firstNameInput = document.getElementById("fname").value;
+        const lastNameInput = document.getElementById("lname").value;
+        const emailInput = document.getElementById("email").value;
+        const ageInput = document.getElementById("age").value;
+        const occupationInput = document.getElementById("occupation").value;
+
+        if (
+          !firstNameInput ||
+          !lastNameInput ||
+          !emailInput ||
+          !ageInput ||
+          !occupationInput
+        ) {
+          alert("kedua field harus diisi");
+          return;
+        }
+
+        const newPerson = new Person({
+          fisrtName: firstNameInput,
+          lastName: lastNameInput,
+          age: ageInput,
+          email: emailInput,
+          occupation: occupationInput,
+        });
+
+        data.push(newPerson);
+        renderData();
+
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("age").value = "";
       };
       renderData();
     </script>
