@@ -61,7 +61,6 @@
           <th colspan="2">Action</th>
         </tr>
       </thead>
-
       <tbody id="tableData"></tbody>
     </table>
 
@@ -114,9 +113,8 @@
 
     <script>
       class Person {
-        constructor({ fisrtName, lastName, occupation, gender, email, age }) {
-          this.fisrtName = fisrtName;
-          this.lastName = lastName;
+        constructor({ fullName, occupation, gender, email, age }) {
+          this.fullName = fullName;
           this.occupation = occupation;
           this.email = email;
           this.age = age;
@@ -124,28 +122,58 @@
       }
       let data = [
         new Person({
-          fisrtName: "John",
-          lastName: "Doe",
+          fullName: "John Doe",
           email: "John@mail.com",
           age: 29,
           occupation: "Software Developer",
         }),
       ];
 
-      const renderData = () => {
+      const renderData = (editIdx) => {
         listData = "";
         data.forEach((val, idx) => {
-          listData += `
-          <tr>
-            <td>${idx + 1}</td>
-            <td>${val.fisrtName + " " + val.lastName}</td>
-            <td>${val.email}</td>
-            <td>${val.age}</td>
-            <td>${val.occupation}</td>
-            <td><button>Edit</button></td>
-            <td><button onclick="deleteData(${idx})">Delete</button></td>
-          </tr>
+          if (idx == editIdx) {
+            listData += `
+            <tr>
+              <td>${idx + 1}</td>
+              <td><input type="text" id="editFullName" value="${
+                val.fullName
+              }"/></td>
+              <td><input type="text" id="editEmail" value="${val.email}" /></td>
+              <td><input type="text" id="editAge" value="${val.age}" /></td>
+              <td>
+                <select id="editOccupation">
+                  <option  ${
+                    val.occupation == "Software Engineer" ? "selected" : ""
+                  }>Software Developer</option>
+                  <option ${
+                    val.occupation == "UI/UX" ? "selected" : ""
+                  }>UI/UX</option>
+                  <option ${
+                    val.occupation == "Data Scientist" ? "selected" : ""
+                  }>Digital Marketer</option>
+                  <option ${
+                    val.occupation == "Digital Marketer" ? "selected" : ""
+                  }>Data Scientist</option>
+                </select>
+              </td>
+              <td><button onclick="renderData()">Cancel</button></td>
+              <td><button onclick="saveData(${idx})">Save</button></td>
+            </tr>
           `;
+          } else {
+            listData += `
+            <tr>
+              <td>${idx + 1}</td>
+              <td>${val.fullName}</td>
+              <td>${val.email}</td>
+              <td>${val.age}</td>
+              <td>${val.occupation}</td>
+              <td><button onclick="renderData(${idx})">Edit</button></td>
+              <td><button onclick="deleteData(${idx})">Delete</button></td>
+            </tr>
+            `;
+          }
         });
         document.getElementById("tableData").innerHTML = listData;
       };
@@ -169,8 +197,7 @@
         }
 
         const newPerson = new Person({
-          fisrtName: firstNameInput,
-          lastName: lastNameInput,
+          fullName: firstNameInput + " " + lastNameInput,
           age: ageInput,
           email: emailInput,
           occupation: occupationInput,
@@ -188,6 +215,20 @@
 
       const deleteData = (deleteIdx) => {
         data.splice(deleteIdx, 1);
+        renderData();
+      };
+
+      const saveData = (editIdx) => {
+        const fullNameInput = document.getElementById("editFullName").value;
+        const emailInput = document.getElementById("editEmail").value;
+        const ageInput = document.getElementById("editAge").value;
+        const occupationInput = document.getElementById("editOccupation").value;
+
+        data[editIdx].fullName = fullNameInput;
+        data[editIdx].email = emailInput;
+        data[editIdx].age = ageInput;
+        data[editIdx].occupation = occupationInput;
+
         renderData();
       };
     </script>
